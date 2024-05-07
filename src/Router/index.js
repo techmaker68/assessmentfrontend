@@ -6,6 +6,7 @@ import Login from "@/components/Login.vue";
 
 import List from "@/components/List.vue";
 import Create from "@/components/Create.vue";
+import Register from "@/components/Register.vue";
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
     path: "/create",
     name: "",
     component: Create,
+  },
+  {
+    path: "/register",
+    name: "",
+    component: Register,
   },
 ];
 

@@ -2,8 +2,19 @@
   <div class="container">
     <div class="d-flex justify-content-center align-items-center">
       <div>
-        <h3>Login form</h3>
+        <h3>Register form</h3>
         <form @submit="login">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              required
+              aria-describedby="emailHelp"
+              v-model="name"
+            />
+          </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
               >Email address</label
@@ -44,7 +55,7 @@
           </div>
           <div class="d-flex justify-content-between">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <button @click="redirect" class="btn btn-primary">Register</button>
+            <button @click="redirect" class="btn btn-primary">login</button>
           </div>
         </form>
         <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
@@ -57,12 +68,13 @@
 import apiService from "../../apiService";
 import router from "@/Router";
 export default {
-  name: "Login",
+  name: "Register",
   setup() {},
   data() {
     return {
       email: "",
       password: "",
+      name: "",
       errorMessage: "",
     };
   },
@@ -70,10 +82,13 @@ export default {
   methods: {
     login(e) {
       e.preventDefault();
-      console.log("rsasdasd");
-      const data = { email: this.email, password: this.password };
+      const data = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+      };
       apiService
-        .post("login", data)
+        .post("register", data)
         .then((res) => {
           localStorage.setItem("token", res.access_token);
           router.push("/welcome");
@@ -83,7 +98,7 @@ export default {
         });
     },
     redirect() {
-      router.push("/register");
+      router.push("/");
     },
   },
 };
