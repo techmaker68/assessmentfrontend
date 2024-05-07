@@ -18,11 +18,13 @@ const routes = [
     path: "/welcome",
     name: "",
     component: List,
+    meta: { requiresAuth: true },
   },
   {
     path: "/create",
     name: "",
     component: Create,
+    meta: { requiresAuth: true },
   },
   {
     path: "/register",
@@ -36,4 +38,15 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!localStorage.getItem("token")) {
+      next({ name: "Home" });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 export default router;
